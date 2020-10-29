@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class UserReceivesBooks
+class UserReturnsBooks
   include Interactor
 
   def call
@@ -8,14 +8,11 @@ class UserReceivesBooks
     context.loans = []
 
     context.books.each do |book|
-      data = {
-        user: context.user,
-        book: Book.find(book[:id]),
-        quantity: book[:quantity],
-        expiration_date: Date.today + Loan::EXPIRATION_DAYS
-      }
-
-      context.loans << Loan.new(data)
+      loan = Loan.find_by(book_id: book[:id], user: context.user)
+      if loan.present?
+        loan.quantity -= book[:quantity].to_i
+        context.loans << loan
+      end
     end
 
     all_valid = context.loans.map(&:valid?).all?
