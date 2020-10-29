@@ -3,4 +3,5 @@
 Rails.application.routes.draw do
   resources :books
   resources :users
+  resources :loans, only: :create
 end
