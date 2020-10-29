@@ -49,14 +49,14 @@ RSpec.describe 'Loans', type: :request do
     end
 
     context 'with invalid parameters' do
-      it 'does not create a new Book' do
+      it 'does not create a new Loan' do
         expect do
           post loans_url,
                params: { loan: invalid_attributes }, as: :json
         end.to change(Loan, :count).by(0)
       end
 
-      it 'renders a JSON response with errors for the new book' do
+      it 'renders a JSON response with errors for the new Loan' do
         post loans_url,
              params: { loan: invalid_attributes }, headers: valid_headers,
              as: :json
