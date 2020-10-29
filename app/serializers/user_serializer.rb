@@ -2,5 +2,6 @@
 
 # UserSerializer
 class UserSerializer < ActiveModel::Serializer
-  attributes :name
+  attributes :id, :name
+  has_many :loans
 end
